@@ -37,25 +37,21 @@ void Timer::TimerSlot()
         ui->spinBox->setEnabled(false);
         ui->spinBox_2->setEnabled(false);
         ui->spinBox_3->setEnabled(false);
-        seconds--;
-        if(seconds <= 0 && minutes > 0){
-                minutes--;
-                seconds = 59;
+
+       if (seconds > 0)
+           seconds--;
+           
+       else if (seconds == 0 && minutes > 0){
+         seconds = 59;
+         minutes--;
+       }
+       else if (seconds == 0 && minutes == 0 && hour > 0){
+         seconds = 59;
+         minutes = 59;
+         hour--;
+       }
 
 
-        if(minutes <= 0){
-
-                minutes = 59;
-
-                if(hour <= 0){
-                    hour = 0;
-                    minutes = 0;
-                }
-                else
-                    hour--;
-            }
-
-        }
 
         ui->label->setText(QString::number(hour));
         ui->label_2->setText(QString::number(minutes));
@@ -63,10 +59,6 @@ void Timer::TimerSlot()
     }
 }
 
-void Timer::SpinSlot()
-{
-
-}
 
 
 void Timer::on_spinBox_valueChanged(int arg1)
@@ -120,4 +112,5 @@ void Timer::on_pushButton_2_clicked()
     flag = true;
     timer->stop();
 }
+
 
